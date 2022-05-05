@@ -53,3 +53,31 @@ function addToolbarButton() {
 }
 
 addToolbarButton();
+
+type Commit = { text: string; link: string; hash: string };
+const getPrCommits = (): Commit[] => {
+  const commits: Commit[] = [];
+
+  const prTimelines = document.querySelectorAll(
+    '[data-test-selector="pr-timeline-commits-list"]'
+  );
+
+  prTimelines.forEach((prTimeline) => {
+    const titles = prTimeline.getElementsByClassName("markdown-title");
+    for (const title of titles) {
+      const commitText = title.textContent;
+      const commitLink = "https://github.com" + title.getAttribute("href");
+      const commitHash = commitLink.split("/").reverse()[0];
+
+      const commit: Commit = {
+        text: commitText || "",
+        link: commitLink,
+        hash: commitHash,
+      };
+
+      commits.push(commit);
+    }
+  });
+
+  return commits;
+};
