@@ -3,7 +3,7 @@ import select from "select-dom";
 
 // gifs-for-github's function
 // https://github.com/N1ck/gifs-for-github/blob/c46828db015a783dec3d3209987b0eb56bcad457/src/main.js#L80
-function addToolbarButton() {
+function addToolbarButton(appendElement: HTMLElement) {
   for (const toolbar of select.all(
     "form:not(.ghg-has-giphy-field) markdown-toolbar"
   )) {
@@ -34,28 +34,56 @@ function addToolbarButton() {
       );
       toolbarGroup = toolbarGroup[toolbarGroup.length - 1];
 
-      // TODO: change button to react component
-      const button = document.createElement("button");
-      button.textContent = "div~";
-      button.type = "button";
-      button.addEventListener("click", () => {
-        console.log("clicked");
-      });
-
       if (toolbarGroup) {
         // Append the Giphy button to the toolbar
         // cloneNode is necessary, without it, it will only be appended to the last toolbarGroup
-        toolbarGroup.append(button);
+        toolbarGroup.append(appendElement);
         form.classList.add("ghg-has-giphy-field");
       }
     });
   }
 }
 
-addToolbarButton();
+addToolbarButton(getCommitDetailsElement());
+
+function getCommitDetailsElement(): HTMLDetailsElement {
+  const detailsElement = document.createElement("details");
+  const summaryElement = document.createElement("summary");
+  summaryElement.textContent = "Commits";
+  detailsElement.append(summaryElement);
+
+  const commitElements = getCommitElements();
+
+  commitElements.forEach((commitElement) => {
+    detailsElement.append(commitElement);
+  });
+
+  return detailsElement;
+}
+
+function getCommitElements(): HTMLElement[] {
+  const data = getPrCommits();
+  const commitElements = data.map((d) => {
+    const wrapper = document.createElement("div");
+    const spanElement = document.createElement("span");
+    spanElement.textContent = d.text;
+
+    const anchorElement = document.createElement("a");
+    anchorElement.text = d.hash.slice(0, 7);
+    anchorElement.href = d.link;
+
+    wrapper.append(spanElement);
+    wrapper.append(anchorElement);
+
+    return wrapper;
+  });
+
+  return commitElements;
+}
 
 type Commit = { text: string; link: string; hash: string };
-const getPrCommits = (): Commit[] => {
+
+function getPrCommits(): Commit[] {
   const commits: Commit[] = [];
 
   const prTimelines = document.querySelectorAll(
@@ -80,4 +108,4 @@ const getPrCommits = (): Commit[] => {
   });
 
   return commits;
-};
+}
