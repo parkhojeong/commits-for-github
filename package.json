@@ -15,7 +15,8 @@
   "type": "module",
   "dependencies": {
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "select-dom": "^7.1.1"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.180",
