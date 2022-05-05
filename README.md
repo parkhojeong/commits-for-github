@@ -76,6 +76,3 @@ This boilerplate is made for creating chrome extensions using React and Typescri
 
 
 
----
-
-[Jonghakseo](https://nookpi.tistory.com/)
