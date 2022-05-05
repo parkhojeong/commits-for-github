@@ -58,13 +58,14 @@ This boilerplate is made for creating chrome extensions using React and Typescri
 
 ## Screenshots <a name="screenshots"></a>
 
-### New Tab <a name="newtab"></a>
+### PR comment box 
+- comment box 
+![Screen Shot 2022-05-06 at 12 21 43 AM](https://user-images.githubusercontent.com/34734102/166957053-dfae3066-6be8-498c-be65-37b79c8ae540.png)
 
-<img width="971" alt="스크린샷 2022-04-11 오전 2 22 00" src="https://user-images.githubusercontent.com/53500778/162631646-cd40976b-b737-43d0-8e6a-6ac090a2e2d4.png">
+- commit list 
+![Screen Shot 2022-05-06 at 12 22 21 AM](https://user-images.githubusercontent.com/34734102/166957276-5bf6ea1c-1e62-4211-93a3-a82b55f306ee.png)
 
-### Popup <a name="popup"></a>
 
-<img width="305" alt="스크린샷 2022-04-11 오전 2 22 11" src="https://user-images.githubusercontent.com/53500778/162631660-d35c5f12-e0d7-4431-a020-97024cdda7a7.png">
 
 
 
