@@ -59,10 +59,9 @@ This boilerplate is made for creating chrome extensions using React and Typescri
 ## Screenshots <a name="screenshots"></a>
 
 ### PR comment box 
-- comment box 
 ![Screen Shot 2022-05-06 at 12 21 43 AM](https://user-images.githubusercontent.com/34734102/166957053-dfae3066-6be8-498c-be65-37b79c8ae540.png)
 
-- commit list 
+### commit list 
 ![Screen Shot 2022-05-06 at 12 22 21 AM](https://user-images.githubusercontent.com/34734102/166957276-5bf6ea1c-1e62-4211-93a3-a82b55f306ee.png)
 
 
