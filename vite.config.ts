@@ -61,6 +61,7 @@ export default defineConfig({
     watch: {
       include: "src",
     },
+    minify: false,
     emptyOutDir: true,
     rollupOptions: {
       input: {
