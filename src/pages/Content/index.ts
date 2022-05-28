@@ -6,15 +6,15 @@ function addToolbarButton(appendElement: HTMLElement) {
   }
 }
 
-addToolbarButton(getCommitDetailsElement());
+addToolbarButton(getCommitDetailsElement(getCommitElements()));
 
-function getCommitDetailsElement(): HTMLDetailsElement {
+function getCommitDetailsElement(
+  commitElements: HTMLElement[]
+): HTMLDetailsElement {
   const detailsElement = document.createElement("details");
   const summaryElement = document.createElement("summary");
   summaryElement.textContent = "Commits";
   detailsElement.append(summaryElement);
-
-  const commitElements = getCommitElements();
 
   commitElements.forEach((commitElement) => {
     detailsElement.append(commitElement);
