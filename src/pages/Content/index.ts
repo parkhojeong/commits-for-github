@@ -1,5 +1,33 @@
 import select from "select-dom";
 
+const detect = () => {
+  const target = select("details.review-thread-component");
+
+  const observer = new MutationObserver(function (mutations) {
+    mutations.forEach(() => {
+      const finded = select("markdown-toolbar", target);
+
+      const CLASS = "appended-commits";
+
+      if (!target?.classList.contains(CLASS)) {
+        target?.classList.add(CLASS);
+        finded?.appendChild(getCommitDetailsElement(getCommitElements()));
+      }
+    });
+  });
+
+  if (!target) {
+    return;
+  }
+
+  observer.observe(target, {
+    attributes: true,
+    subtree: true,
+  });
+};
+
+detect();
+
 function addToolbarButton(appendElement: HTMLElement) {
   for (const toolbar of select.all("markdown-toolbar")) {
     toolbar.append(appendElement);
