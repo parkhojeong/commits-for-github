@@ -24,10 +24,10 @@ const detect = (targetElement: HTMLElement) => {
   });
 };
 
-const detectTarget = select("details.review-thread-component");
-if (detectTarget) {
-  detect(detectTarget);
-}
+const detectTargets = select.all("details.review-thread-component");
+detectTargets.map((target) => {
+  detect(target);
+});
 
 function addToolbarButton(appendElement: HTMLElement) {
   for (const toolbar of select.all("markdown-toolbar")) {
