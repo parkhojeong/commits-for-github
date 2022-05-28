@@ -28,11 +28,6 @@ export default defineConfig({
       minify: true,
       pages: [
         {
-          entry: resolve(pagesDir, "Newtab", "index.tsx"),
-          filename: "newtab.js",
-          template: "public/newtab.html",
-        },
-        {
           entry: resolve(pagesDir, "Options", "index.tsx"),
           filename: "options.js",
           template: "public/options.html",

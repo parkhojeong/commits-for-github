@@ -38,7 +38,6 @@ export interface ManifestType {
     | {
         bookmarks?: string | undefined;
         history?: string | undefined;
-        newtab?: string | undefined;
       }
     | undefined;
   commands?:
