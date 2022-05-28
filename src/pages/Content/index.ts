@@ -21,6 +21,7 @@ const detect = (targetElement: HTMLElement) => {
   observer.observe(targetElement, {
     attributes: true,
     subtree: true,
+    attributeFilter: ["hidden"],
   });
 };
 
