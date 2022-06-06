@@ -8,7 +8,7 @@
 ![GitHub action badge](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite/actions/workflows/build.yml/badge.svg)
 </div>
 
-### commits-for-github
+### [commits-for-github](https://chrome.google.com/webstore/detail/commits-for-github/neodnhmpddbnioldcljmkkknpmhdhpjo?hl=en)
 
 A Browser extension that makes it easy to search commit list and add commit link into any GitHub comment box.
 
