@@ -1,5 +1,3 @@
-import ElementUtil from "@pages/Content/utils/element";
-
 type CommitInfo = { title: string; link: string; hash: string };
 
 export default function getCommitElements(): HTMLElement[] {
@@ -42,16 +40,16 @@ function getCommitInfo(element: HTMLAnchorElement): CommitInfo {
 }
 
 function getPRTimelineTitles(): HTMLElement[] {
-  const prTimeLines = ElementUtil.arrayFrom(
+  const prTimeLines = Array.from(
     document.querySelectorAll('[data-test-selector="pr-timeline-commits-list"]')
   );
   const titles = prTimeLines
     .map((element) =>
-      ElementUtil.arrayFrom(element.getElementsByClassName("markdown-title"))
+      Array.from(element.getElementsByClassName("markdown-title"))
     )
     .flat(1);
 
-  return titles;
+  return titles as HTMLElement[];
 }
 
 function isAnchorElement(element: HTMLElement): element is HTMLAnchorElement {
