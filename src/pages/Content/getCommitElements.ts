@@ -2,16 +2,15 @@ import ElementUtil from "@pages/Content/utils/element";
 
 type CommitInfo = { title: string; link: string; hash: string };
 
-export default function getCommitElements() {
+export default function getCommitElements(): HTMLElement[] {
   const prTimelineTitles: HTMLElement[] = getPRTimelineTitles();
   const prCommitInfos: CommitInfo[] = prTimelineTitles.map(getCommitInfo);
-  const commitElements: HTMLDivElement[] =
-    prCommitInfos.map(createCommitElement);
+  const commitElements: HTMLElement[] = prCommitInfos.map(createCommitElement);
 
   return commitElements;
 }
 
-function createCommitElement(commentInfo: CommitInfo): HTMLDivElement {
+function createCommitElement(commentInfo: CommitInfo): HTMLElement {
   const commitElement = document.createElement("div");
   const spanElement = document.createElement("span");
   spanElement.textContent = commentInfo.title;
