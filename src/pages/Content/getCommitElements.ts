@@ -4,7 +4,9 @@ type CommitInfo = { title: string; link: string; hash: string };
 
 export default function getCommitElements(): HTMLElement[] {
   const prTimelineTitles: HTMLElement[] = getPRTimelineTitles();
-  const prCommitInfos: CommitInfo[] = prTimelineTitles.map(getCommitInfo);
+  const prCommitInfos: CommitInfo[] = prTimelineTitles
+    .filter(isAnchorElement)
+    .map(getCommitInfo);
   const commitElements: HTMLElement[] = prCommitInfos.map(createCommitElement);
 
   return commitElements;
@@ -25,7 +27,7 @@ function createCommitElement(commentInfo: CommitInfo): HTMLElement {
   return commitElement;
 }
 
-function getCommitInfo(element: Element): CommitInfo {
+function getCommitInfo(element: HTMLAnchorElement): CommitInfo {
   const commitTitle = element.textContent;
   const commitLink = "https://github.com" + element.getAttribute("href");
   const commitHash = commitLink.split("/").reverse()[0];
@@ -50,4 +52,8 @@ function getPRTimelineTitles(): HTMLElement[] {
     .flat(1);
 
   return titles;
+}
+
+function isAnchorElement(element: HTMLElement): element is HTMLAnchorElement {
+  return element.tagName.toUpperCase() === "A";
 }
