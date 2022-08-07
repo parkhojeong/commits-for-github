@@ -5,7 +5,7 @@ import { DETAIL_CLASS_NAME } from "@pages/Content/constansts";
 
 const detect = (targetElement: HTMLElement) => {
   const observer = new MutationObserver(function (mutations) {
-    mutations.forEach(() => {
+    mutations.forEach((mutation) => {
       const finded = select("markdown-toolbar", targetElement);
 
       const CLASS = "appended-commits";
