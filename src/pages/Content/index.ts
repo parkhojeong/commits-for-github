@@ -31,3 +31,11 @@ const detectTargets = select.all("details.review-thread-component");
 detectTargets.map((target) => {
   detect(target);
 });
+
+function addToolbarButton(appendElement: HTMLElement) {
+  for (const toolbar of select.all("markdown-toolbar")) {
+    toolbar.append(appendElement);
+  }
+}
+
+addToolbarButton(createCommitsCollapse(getCommitElements()));
