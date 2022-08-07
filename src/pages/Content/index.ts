@@ -1,6 +1,7 @@
 import select from "select-dom";
 import getCommitElements from "@pages/Content/getCommitElements";
 import createCommitsCollapse from "@pages/Content/createCommitsCollapse";
+import { DETAIL_CLASS_NAME } from "@pages/Content/constansts";
 
 const detect = (targetElement: HTMLElement) => {
   const observer = new MutationObserver(function (mutations) {
