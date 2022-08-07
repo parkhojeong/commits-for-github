@@ -7,6 +7,7 @@ const detect = (targetElement: HTMLElement) => {
   const observer = new MutationObserver(function (mutations) {
     mutations.forEach((mutation) => {
       console.log(mutation);
+      const toolbar = select("markdown-toolbar", targetElement);
 
       const CLASS = "appended-commits";
 
