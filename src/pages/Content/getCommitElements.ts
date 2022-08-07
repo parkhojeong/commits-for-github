@@ -48,7 +48,6 @@ function getPRTimelineTitles(): HTMLElement[] {
       Array.from(element.getElementsByClassName("markdown-title"))
     )
     .flat(1);
-  console.log(titles);
   return titles as HTMLElement[];
 }
 
