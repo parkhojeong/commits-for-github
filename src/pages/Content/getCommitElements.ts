@@ -1,17 +1,16 @@
-import ElementUtil from "@pages/Content/utils/element";
-
 type CommitInfo = { title: string; link: string; hash: string };
 
-export default function getCommitElements() {
+export default function getCommitElements(): HTMLElement[] {
   const prTimelineTitles: HTMLElement[] = getPRTimelineTitles();
-  const prCommitInfos: CommitInfo[] = prTimelineTitles.map(getCommitInfo);
-  const commitElements: HTMLDivElement[] =
-    prCommitInfos.map(createCommitElement);
+  const prCommitInfos: CommitInfo[] = prTimelineTitles
+    .filter(isAnchorElement)
+    .map(getCommitInfo);
+  const commitElements: HTMLElement[] = prCommitInfos.map(createCommitElement);
 
   return commitElements;
 }
 
-function createCommitElement(commentInfo: CommitInfo): HTMLDivElement {
+function createCommitElement(commentInfo: CommitInfo): HTMLElement {
   const commitElement = document.createElement("div");
   const spanElement = document.createElement("span");
   spanElement.textContent = commentInfo.title;
@@ -26,7 +25,7 @@ function createCommitElement(commentInfo: CommitInfo): HTMLDivElement {
   return commitElement;
 }
 
-function getCommitInfo(element: Element): CommitInfo {
+function getCommitInfo(element: HTMLAnchorElement): CommitInfo {
   const commitTitle = element.textContent;
   const commitLink = "https://github.com" + element.getAttribute("href");
   const commitHash = commitLink.split("/").reverse()[0];
@@ -41,14 +40,18 @@ function getCommitInfo(element: Element): CommitInfo {
 }
 
 function getPRTimelineTitles(): HTMLElement[] {
-  const prTimeLines = ElementUtil.arrayFrom(
+  const prTimeLines = Array.from(
     document.querySelectorAll('[data-test-selector="pr-timeline-commits-list"]')
   );
   const titles = prTimeLines
     .map((element) =>
-      ElementUtil.arrayFrom(element.getElementsByClassName("markdown-title"))
+      Array.from(element.getElementsByClassName("markdown-title"))
     )
     .flat(1);
 
-  return titles;
+  return titles as HTMLElement[];
+}
+
+function isAnchorElement(element: HTMLElement): element is HTMLAnchorElement {
+  return element.tagName.toUpperCase() === "A";
 }
