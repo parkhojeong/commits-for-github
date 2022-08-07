@@ -1,43 +1,34 @@
 import select from "select-dom";
 import getCommitElements from "@pages/Content/getCommitElements";
 import createCommitsCollapse from "@pages/Content/createCommitsCollapse";
-import { DETAIL_CLASS_NAME } from "@pages/Content/constansts";
+import removeAlreadyCreatedDetail from "@pages/Content/removeAlreadyCreatedDetail";
+
+const updateCommits = (target: HTMLElement) => {
+  const toolbar = select("markdown-toolbar", target);
+  removeAlreadyCreatedDetail(toolbar);
+  toolbar?.appendChild(createCommitsCollapse(getCommitElements()));
+};
 
 const detect = (targetElement: HTMLElement) => {
-  const observer = new MutationObserver(function (mutations) {
-    mutations.forEach((mutation) => {
-      console.log(mutation);
-      const toolbar = select("markdown-toolbar", targetElement);
-
-      const CLASS = "appended-commits";
-
-      if (!targetElement?.classList.contains(CLASS)) {
-        targetElement?.classList.add(CLASS);
-        finded?.appendChild(createCommitsCollapse(getCommitElements()));
-      }
-    });
-  });
-
   if (!targetElement) {
     return;
   }
+  updateCommits(targetElement);
+
+  const observer = new MutationObserver(function (mutations) {
+    mutations.forEach(() => updateCommits(targetElement));
+  });
 
   observer.observe(targetElement, {
-    attributes: true,
-    subtree: true,
-    attributeFilter: ["hidden"],
+    childList: true,
   });
 };
 
-const detectTargets = select.all("details.review-thread-component");
-detectTargets.map((target) => {
-  detect(target);
-});
-
-function addToolbarButton(appendElement: HTMLElement) {
-  for (const toolbar of select.all("markdown-toolbar")) {
-    toolbar.append(appendElement);
-  }
+function init() {
+  const detectTargets = select.all("div.js-discussion");
+  detectTargets.map((target) => {
+    detect(target);
+  });
 }
 
-addToolbarButton(createCommitsCollapse(getCommitElements()));
+init();
