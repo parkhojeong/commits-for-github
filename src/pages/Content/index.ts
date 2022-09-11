@@ -2,33 +2,50 @@ import select from "select-dom";
 import getCommitElements from "@pages/Content/getCommitElements";
 import createCommitsCollapse from "@pages/Content/createCommitsCollapse";
 import removeAlreadyCreatedDetail from "@pages/Content/removeAlreadyCreatedDetail";
+import { DETAIL_CLASS_NAME } from "@pages/Content/constansts";
 
-const updateCommits = (target: HTMLElement) => {
-  const toolbar = select("markdown-toolbar", target);
-  removeAlreadyCreatedDetail(toolbar);
-  toolbar?.appendChild(createCommitsCollapse(getCommitElements()));
+const findAllToolbar = (): HTMLElement[] => {
+  const toolbars = select.all("markdown-toolbar");
+  return toolbars.filter(Boolean);
 };
 
-const detect = (targetElement: HTMLElement) => {
-  if (!targetElement) {
-    return;
-  }
-  updateCommits(targetElement);
+const updateCommits = (htmlElement: HTMLElement): void => {
+  removeAlreadyCreatedDetail(htmlElement, DETAIL_CLASS_NAME);
+  htmlElement.appendChild(
+    createCommitsCollapse(getCommitElements(), DETAIL_CLASS_NAME)
+  );
+};
 
+const observeElement = (element: HTMLElement, callback: () => void) => {
   const observer = new MutationObserver(function (mutations) {
-    mutations.forEach(() => updateCommits(targetElement));
+    mutations.forEach(callback);
   });
 
-  observer.observe(targetElement, {
+  observer.observe(element, {
     childList: true,
   });
 };
 
-function init() {
-  const detectTargets = select.all("div.js-discussion");
-  detectTargets.map((target) => {
-    detect(target);
+const getCommitUpdateArea = (): HTMLElement[] => {
+  const discussions = select.all("div.js-discussion");
+  return discussions.filter(Boolean);
+};
+
+function updateAllToolbar(): void {
+  const allToolbar = findAllToolbar();
+  allToolbar.forEach(updateCommits);
+}
+
+function whenCommitUpdated(callback: () => void): void {
+  const commitUpdateArea = getCommitUpdateArea();
+  commitUpdateArea.forEach((element) => {
+    observeElement(element, callback);
   });
+}
+
+function init(): void {
+  updateAllToolbar();
+  whenCommitUpdated(updateAllToolbar);
 }
 
 init();
