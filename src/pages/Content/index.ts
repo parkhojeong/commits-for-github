@@ -32,8 +32,8 @@ const getCommitUpdateArea = (): HTMLElement[] => {
 };
 
 function updateAllToolbar(): void {
-  const allToolbar = findAllToolbar();
-  allToolbar.forEach(updateCommits);
+ findAllToolbar().forEach(updateCommits);
+
 }
 
 function whenCommitUpdated(callback: () => void): void {
