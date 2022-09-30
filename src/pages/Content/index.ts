@@ -4,9 +4,11 @@ import createCommitsCollapse from "@pages/Content/createCommitsCollapse";
 import removeAlreadyCreatedDetail from "@pages/Content/removeAlreadyCreatedDetail";
 
 const DETAIL_CLASS_NAME = "commits-for-github-detail";
+const DISCUSSION_AREA_SELECTOR = "div.js-discussion";
+const COMMENT_TOOLBAR_SELECTOR = "markdown-toolbar";
 
 const findAllToolbar = (): HTMLElement[] => {
-  return select.all("markdown-toolbar").filter(Boolean);
+  return select.all(COMMENT_TOOLBAR_SELECTOR).filter(Boolean);
 };
 
 const updateCommits = (htmlElement: HTMLElement): void => {
@@ -27,7 +29,7 @@ const observeElement = (element: HTMLElement, callback: () => void) => {
 };
 
 const getCommitUpdateArea = (): HTMLElement[] => {
-  return select.all("div.js-discussion").filter(Boolean);
+  return select.all(DISCUSSION_AREA_SELECTOR).filter(Boolean);
 };
 
 function updateAllToolbar(): void {
