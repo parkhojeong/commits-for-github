@@ -6,7 +6,7 @@ import removeAlreadyCreatedDetail from "@pages/Content/removeAlreadyCreatedDetai
 const DETAIL_CLASS_NAME = "commits-for-github-detail";
 
 const findAllToolbar = (): HTMLElement[] => {
- return select.all("markdown-toolbar").filter(Boolean);
+  return select.all("markdown-toolbar").filter(Boolean);
 };
 
 const updateCommits = (htmlElement: HTMLElement): void => {
@@ -32,8 +32,7 @@ const getCommitUpdateArea = (): HTMLElement[] => {
 };
 
 function updateAllToolbar(): void {
- findAllToolbar().forEach(updateCommits);
-
+  findAllToolbar().forEach(updateCommits);
 }
 
 function whenCommitUpdated(callback: () => void): void {
