@@ -27,8 +27,7 @@ const observeElement = (element: HTMLElement, callback: () => void) => {
 };
 
 const getCommitUpdateArea = (): HTMLElement[] => {
-  const discussions = select.all("div.js-discussion");
-  return discussions.filter(Boolean);
+  return select.all("div.js-discussion").filter(Boolean);
 };
 
 function updateAllToolbar(): void {
