@@ -6,8 +6,7 @@ import removeAlreadyCreatedDetail from "@pages/Content/removeAlreadyCreatedDetai
 const DETAIL_CLASS_NAME = "commits-for-github-detail";
 
 const findAllToolbar = (): HTMLElement[] => {
-  const toolbars = select.all("markdown-toolbar");
-  return toolbars.filter(Boolean);
+ return select.all("markdown-toolbar").filter(Boolean);
 };
 
 const updateCommits = (htmlElement: HTMLElement): void => {
