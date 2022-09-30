@@ -2,7 +2,8 @@ import select from "select-dom";
 import getCommitElements from "@pages/Content/getCommitElements";
 import createCommitsCollapse from "@pages/Content/createCommitsCollapse";
 import removeAlreadyCreatedDetail from "@pages/Content/removeAlreadyCreatedDetail";
-import { DETAIL_CLASS_NAME } from "@pages/Content/constansts";
+
+const DETAIL_CLASS_NAME = "commits-for-github-detail";
 
 const findAllToolbar = (): HTMLElement[] => {
   const toolbars = select.all("markdown-toolbar");
