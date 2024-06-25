@@ -25,7 +25,7 @@ export default defineConfig({
     react(),
     ...customPlugins,
     createHtmlPlugin({
-      minify: true,
+      minify: false,
       pages: [
         {
           entry: resolve(pagesDir, "Options", "index.tsx"),
