@@ -1,103 +1,50 @@
 import select from "select-dom";
+import getCommitElements from "@pages/Content/getCommitElements";
+import createCommitsCollapse from "@pages/Content/createCommitsCollapse";
+import removeAlreadyCreatedDetail from "@pages/Content/removeAlreadyCreatedDetail";
 
-const detect = (targetElement: HTMLElement) => {
+const DETAIL_CLASS_NAME = "commits-for-github-detail";
+const DISCUSSION_AREA_SELECTOR = "div.js-discussion";
+const COMMENT_TOOLBAR_SELECTOR = "markdown-toolbar";
+
+const findAllToolbar = (): HTMLElement[] => {
+  return select.all(COMMENT_TOOLBAR_SELECTOR).filter(Boolean);
+};
+
+const updateCommits = (htmlElement: HTMLElement): void => {
+  removeAlreadyCreatedDetail(htmlElement, DETAIL_CLASS_NAME);
+  htmlElement.appendChild(
+    createCommitsCollapse(getCommitElements(), DETAIL_CLASS_NAME)
+  );
+};
+
+const observeElement = (element: HTMLElement, callback: () => void) => {
   const observer = new MutationObserver(function (mutations) {
-    mutations.forEach(() => {
-      const finded = select("markdown-toolbar", targetElement);
-
-      const CLASS = "appended-commits";
-
-      if (!targetElement?.classList.contains(CLASS)) {
-        targetElement?.classList.add(CLASS);
-        finded?.appendChild(getCommitDetailsElement(getCommitElements()));
-      }
-    });
+    mutations.forEach(callback);
   });
 
-  if (!targetElement) {
-    return;
-  }
-
-  observer.observe(targetElement, {
-    attributes: true,
-    subtree: true,
-    attributeFilter: ["hidden"],
+  observer.observe(element, {
+    childList: true,
   });
 };
 
-const detectTargets = select.all("details.review-thread-component");
-detectTargets.map((target) => {
-  detect(target);
-});
+const getCommitUpdateArea = (): HTMLElement[] => {
+  return select.all(DISCUSSION_AREA_SELECTOR).filter(Boolean);
+};
 
-function addToolbarButton(appendElement: HTMLElement) {
-  for (const toolbar of select.all("markdown-toolbar")) {
-    toolbar.append(appendElement);
-  }
+function updateAllToolbar(): void {
+  findAllToolbar().forEach(updateCommits);
 }
 
-addToolbarButton(getCommitDetailsElement(getCommitElements()));
-
-function getCommitDetailsElement(
-  commitElements: HTMLElement[]
-): HTMLDetailsElement {
-  const detailsElement = document.createElement("details");
-  const summaryElement = document.createElement("summary");
-  summaryElement.textContent = "Commits";
-  detailsElement.append(summaryElement);
-
-  commitElements.forEach((commitElement) => {
-    detailsElement.append(commitElement);
+function whenCommitUpdated(callback: () => void): void {
+  getCommitUpdateArea().forEach((element) => {
+    observeElement(element, callback);
   });
-
-  return detailsElement;
 }
 
-function getCommitElements(): HTMLElement[] {
-  const data = getPrCommits();
-  const commitElements = data.map((d) => {
-    const wrapper = document.createElement("div");
-    const spanElement = document.createElement("span");
-    spanElement.textContent = d.text;
-
-    const anchorElement = document.createElement("a");
-    anchorElement.text = d.hash.slice(0, 7);
-    anchorElement.href = d.link;
-
-    wrapper.append(spanElement);
-    wrapper.append(anchorElement);
-
-    return wrapper;
-  });
-
-  return commitElements;
+function init(): void {
+  updateAllToolbar();
+  whenCommitUpdated(updateAllToolbar);
 }
 
-type Commit = { text: string; link: string; hash: string };
-
-function getPrCommits(): Commit[] {
-  const commits: Commit[] = [];
-
-  const prTimelines = document.querySelectorAll(
-    '[data-test-selector="pr-timeline-commits-list"]'
-  );
-
-  prTimelines.forEach((prTimeline) => {
-    const titles = prTimeline.getElementsByClassName("markdown-title");
-    for (const title of titles) {
-      const commitText = title.textContent;
-      const commitLink = "https://github.com" + title.getAttribute("href");
-      const commitHash = commitLink.split("/").reverse()[0];
-
-      const commit: Commit = {
-        text: commitText || "",
-        link: commitLink,
-        hash: commitHash,
-      };
-
-      commits.push(commit);
-    }
-  });
-
-  return commits;
-}
+init();
