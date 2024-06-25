@@ -41,7 +41,9 @@ function getCommitInfo(element: HTMLAnchorElement): CommitInfo {
 
 function getPRTimelineTitles(): HTMLElement[] {
   const prTimeLines = Array.from(
-    document.querySelectorAll('[data-test-selector="pr-timeline-commits-list"]')
+    document.querySelectorAll(
+      "#discussion_bucket > div > div.Layout-main > div > div.js-discussion.js-socket-channel.ml-0.pl-0.ml-md-6.pl-md-3 > div:nth-child(3) > div > div:nth-child(2)"
+    )
   );
   const titles = prTimeLines
     .map((element) =>
