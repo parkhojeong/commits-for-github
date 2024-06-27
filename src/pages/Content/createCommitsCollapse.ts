@@ -7,10 +7,10 @@ export default function createCommitsCollapse(
   const summaryElement = document.createElement("summary");
   summaryElement.textContent = "Commits";
 
-  detailsElement.append(summaryElement);
+  detailsElement.appendChild(summaryElement);
 
   commitElements.forEach((commitElement) => {
-    detailsElement.append(commitElement);
+    detailsElement.appendChild(commitElement);
   });
 
   return detailsElement;
