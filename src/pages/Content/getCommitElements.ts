@@ -40,14 +40,9 @@ function getCommitInfo(element: HTMLAnchorElement): CommitInfo {
 }
 
 function getPRTimelineTitles(): HTMLElement[] {
-  const prTimeLines = Array.from(
-    document.querySelectorAll('[data-test-selector="pr-timeline-commits-list"]')
-  );
-  const titles = prTimeLines
-    .map((element) =>
-      Array.from(element.getElementsByClassName("markdown-title"))
-    )
-    .flat(1);
+  const titles = Array.from(
+    document.getElementsByClassName("Link--secondary markdown-title")
+  ).flat(1);
 
   return titles as HTMLElement[];
 }
